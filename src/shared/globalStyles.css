@@ -10,3 +10,7 @@
   ),
   repeating-linear-gradient(#23365655, #233256);
 }
+
+.flex{
+  display: flex;
+}
