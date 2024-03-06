@@ -1,0 +1,74 @@
+.track-card{
+  --track-card-padding: .5rem;
+  --track-card-border-radius : 5px;
+  height: calc(3.5rem - var(--track-card-padding) * 2);
+  padding: var(--track-card-padding);
+  border-radius: var(--track-card-border-radius);
+  display: grid;
+  grid-template-columns: calc(3.5rem - var(--track-card-padding)*2) 2.5fr 1fr;
+  gap: .5rem;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+.track-card:hover{
+  background-color: #4354898a;
+  /* transform: scale(1.05); */
+}
+
+.track-card-image{
+  border-radius: var(--track-card-border-radius);
+  overflow: hidden;
+}
+
+.track-card-image img{
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.track-card-name{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 14px;
+  color: #aaaaaa;
+  padding-left: .5rem;
+}
+
+.track-card-name .track-name{
+  font-size: 16px;
+  color: #ddd;
+
+}
+
+.control-text-overflow_1{
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;  
+}
+.control-text-overflow_2{
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;  
+}
+
+.track-card-album{
+  --padding-left: 2rem;
+  display: flex;
+  align-items: center;
+  padding-left: 2rem;
+  color: #bbb;
+  font-size: 15px;
+}
+.track-card-album p{
+  text-overflow: ellipsis;
+  width: calc(100%-var(padding-left));
+}
+.track-card-album p:hover{
+  text-decoration: underline;
+  color: #ddd
+}

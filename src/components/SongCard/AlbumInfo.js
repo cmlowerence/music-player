@@ -4,6 +4,7 @@ import "./albumInfo.css";
 export default function AlbumInfo({ albumInfo }) {
   // const artists = [];
   // album?.artists.forEach((e) => artists.push(e.name));
+  console.log(albumInfo)
   return (
     <div className='albumInfo-card'>
       <div className='albumName-container'>

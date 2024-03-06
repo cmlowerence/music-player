@@ -60,13 +60,16 @@ export default function Player() {
       ? setCurrentTrack(tracks[currentIndex]?.track)
       : location.state?.type === "album"
       ? setCurrentTrack(tracks[currentIndex])
-      : setCurrentTrack({});
+      : setCurrentTrack({})
+  }, [currentIndex, tracks, location,]);
+
+  useEffect(()=>{
     setCoverImgs(
       location.state?.img_urls
         ? location.state?.img_urls.split(",")
         : currentTrack?.album?.images?.map((img) => img?.url)
     );
-  }, [currentIndex, tracks, location, currentTrack]);
+  },[location, currentTrack?.album])
 
   return (
     <div className='screen-container flex'>

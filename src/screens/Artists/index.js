@@ -5,11 +5,12 @@ import "./artists.css";
 import { IconContext } from "react-icons";
 import { SlSocialSpotify } from "react-icons/sl";
 import AlbumCard from "../../components/AlbumCard";
+import TrackCard from "../../components/TrackCard";
 
 export default function Artists() {
   const { id } = useParams();
   const [artistData, setArtistData] = useState({});
-  const [artistTopTracks, setArtistTopTracks] = useState({});
+  const [artistTopTracks, setArtistTopTracks] = useState([]);
   const [artistTopAlbums, setArtistTopAlbums] = useState({});
   const [expendedTracks, setExpendedTracks] = useState(false);
   const [expendedAlbums, setExpendedAlbums] = useState(false);
@@ -35,8 +36,9 @@ export default function Artists() {
         ]);
 
       setArtistData(_artistData.data);
-      setArtistTopTracks(_artistTopTracks.data);
+      setArtistTopTracks(_artistTopTracks.data?.tracks);
       setArtistTopAlbums(_artistTopAlbums.data);
+      console.log(_artistTopTracks.data.tracks);
     };
     fetchData();
   }, [id]);
@@ -47,7 +49,7 @@ export default function Artists() {
         <p className='artist-name flex'>{artistData?.name}</p>
         <div className='artist-albums flex'>
           <span
-            className='album_see-more'
+            className='see-more'
             onClick={() => setExpendedAlbums(!expendedAlbums)}
           >
             Show {expendedAlbums ? "Less ▲" : "More ▼"}
@@ -60,7 +62,30 @@ export default function Artists() {
                 ?.slice(0, 3)
                 ?.map((album) => <AlbumCard album={album} key={album?.id} />)}
         </div>
-        <div className='artist-tracks flex'>Tracks</div>
+        <div className='artist-tracks flex'>
+          <span className='track-heading-text'>Top Tracks</span>
+          <span
+            className='see-more'
+            onClick={() => setExpendedTracks(!expendedTracks)}
+          >
+            Show {expendedTracks ? "Less ▲" : "More ▼"}
+          </span>
+          {expendedTracks
+            ? artistTopTracks
+                ?.slice(0,10)
+                ?.map((track) => (
+                  <TrackCard key={track.id} track={track} artist={artistData} />
+                ))
+            : artistTopTracks
+                ?.slice(0, 5)
+                ?.map((track) => (
+                  <TrackCard
+                    key={track.id}
+                    track={track}
+                    artistData={artistData}
+                  />
+                ))}
+        </div>
       </div>
 
       <div className='artist-right flex'>

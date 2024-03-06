@@ -5,16 +5,15 @@ import { IconContext } from "react-icons";
 import { FiChevronRight } from "react-icons/fi";
 
 export default function WidgetCard({ title, similar, featured, newReleases }) {
-  const formatNumber = (num) => {
-    if (num >= 1000) {
-      const units = ["K", "M", "B", "T"];
-      let unitIndex = Math.floor(Math.log10(num) / 3) - 1;
-      let formattedNum = num / Math.pow(10, unitIndex * 3);
-      return formattedNum.toFixed(1) + units[unitIndex];
-    } else {
-      return num.toString();
+  function formatNumber(num) {
+    const suffixes = ['', 'K', 'M', 'B', 'T'];
+    const suffixNum = Math.floor(('' + num).length / 3);
+    let shortValue = parseFloat((suffixNum !== 0 ? (num / Math.pow(1000, suffixNum)) : num).toPrecision(3));
+    if (shortValue % 1 !== 0) {
+        shortValue = shortValue.toFixed(1);
     }
-  };
+    return shortValue + suffixes[suffixNum];
+}
   return (
     <div className='widgetcard-body'>
       <p className='widget-title'>{title}</p>
