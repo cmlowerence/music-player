@@ -14,21 +14,59 @@ export default function Player() {
   const [tracks, setTracks] = useState([]);
   const [currentTrack, setCurrentTrack] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [coverImgs, setCoverImgs] = useState([]);
 
   useEffect(() => {
     if (location.state) {
+      if (location.state?.type === "playlist") {
+        apiClient
+          .get(`playlists/${location.state?.id}/tracks`)
+          .then((response) => {
+            setTracks(response.data.items);
+            setCurrentTrack(response.data?.items[0]?.track);
+            window.localStorage.setItem(
+              "spotifyToken_playlist_id",
+              (location.state?.id).toString() || "1zbLfcXuRLe7wPA4nQLmQD"
+            );
+          });
+      } else if (location.state?.type === "album") {
+        apiClient
+          .get(`albums/${location.state?.id}/tracks`)
+          .then((response) => {
+            setTracks(response.data.items);
+            setCurrentTrack(response.data?.items?.[0]);
+          });
+      } else if (location.state?.type === "track") {
+        // do something
+      } else {
+        throw new Error("No id type given");
+      }
+    } else {
       apiClient
-        .get(`playlists/${location.state?.id}/tracks`)
+        .get(
+          `playlists/${
+            window.localStorage.getItem("spotifyToken_playlist_id") ||
+            "2Mj5Mpi1wwNXpjtTTFfNZz"
+          }/tracks`
+        )
         .then((response) => {
           setTracks(response.data.items);
           setCurrentTrack(response.data?.items[0]?.track);
         });
     }
   }, [location.state]);
-
   useEffect(() => {
-    setCurrentTrack(tracks[currentIndex]?.track);
-  }, [currentIndex, tracks]);
+    location.state?.type === "playlist"
+      ? setCurrentTrack(tracks[currentIndex]?.track)
+      : location.state?.type === "album"
+      ? setCurrentTrack(tracks[currentIndex])
+      : setCurrentTrack({});
+    setCoverImgs(
+      location.state?.img_urls
+        ? location.state?.img_urls.split(",")
+        : currentTrack?.album?.images?.map((img) => img?.url)
+    );
+  }, [currentIndex, tracks, location, currentTrack]);
 
   return (
     <div className='screen-container flex'>
@@ -38,13 +76,26 @@ export default function Player() {
           total={tracks}
           currentIndex={currentIndex}
           setCurrentIndex={setCurrentIndex}
+          trackOrigin={location.state?.type}
+          coverImgs={coverImgs}
         />
-        <Widgets artistId={currentTrack?.album?.artists[0]?.id} />
+        <Widgets
+          artistId={
+            currentTrack?.album?.artists[0]?.id ||
+            currentTrack?.artists?.[0]?.id
+          }
+        />
       </div>
       <div className='right-player-body'>
-        <SongCard album={currentTrack?.album} />
+        <SongCard
+          currentTrack={currentTrack}
+          coverImgs={coverImgs}
+          trackState={location.state}
+        />
         <Queue tracks={tracks} setCurrentIndex={setCurrentIndex} />
       </div>
     </div>
   );
 }
+// 2Mj5Mpi1wwNXpjtTTFfNZz
+// 1zbLfcXuRLe7wPA4nQLmQD

@@ -19,3 +19,4 @@ export const setClientToken = (token)=>{
 }
 
 export default apiClient;
+// https://api.spotify.com/v1/me/playlists/${location?.state?.id}/tracks

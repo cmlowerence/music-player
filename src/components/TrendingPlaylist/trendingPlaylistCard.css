@@ -1,0 +1,46 @@
+.trending-playlist-element{
+	width: 337px;
+	height: 74px;
+	justify-content: flex-start;
+	align-items: center;
+	border-radius: 15px;
+	background-color: orange;
+	flex-direction: row;
+	gap: 1rem;
+/*	margin-left: 2rem;*/
+	background-color: rgb(30, 42, 62);
+	border: 1px solid rgb(54, 69, 98, .18);
+	background: linear-gradient(75deg,
+	      rgb(40, 58, 88) 0%,
+	      rgba(54, 69, 98, .1) 100%);
+	transition: all .2s ease;
+	cursor: pointer;
+}
+
+.trending-playlist-element:hover{
+	box-shadow: 2px 2px 5px 1px rgba(30, 42, 62, .3);
+	transform: scale(.97);
+}
+
+.trending-playlist-image{
+	height: 100%;
+	aspect-ratio: 1;
+	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.trending-playlist-image img{
+	width: 100%;
+	border-top-left-radius: 15px;
+	border-bottom-left-radius: 15px;
+}
+
+.trending-playlist-name{
+	font-size: 20px;
+	font-weight: 800;
+	color: #c4d0e3;
+}
+
+

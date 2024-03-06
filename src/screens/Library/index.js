@@ -11,14 +11,13 @@ export default function Library() {
   useEffect(() => {
     apiClient.get("me/playlists").then((response) => {
       setPlaylists(response.data.items);
-      console.log(response.data.items);
     });
   }, []);
 
   const navigate = useNavigate();
 
   const playPlaylist = (playlist_id)=>{
-    navigate('/player', {state: {id : playlist_id}})
+    navigate('/player', {state: {id : playlist_id, type: 'playlist'}})
   }
   return (
     <div className='screen-container'>

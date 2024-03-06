@@ -33,18 +33,6 @@ export default function Widgets({ artistId }) {
     fetchData();
   }, [artistId]);
 
-  useEffect(() => {
-    console.log("Similar Artists:"); console.log(similar);
-  }, [similar]);
-
-  useEffect(() => {
-    console.log("Featured Playlists:");console.log(featured)
-  }, [featured]);
-
-  useEffect(() => {
-    console.log("New Releases:");console.log(newReleases);
-  }, [newReleases]);
-
   return (
     <div className='widget-body flex'>
       <WidgetCard title='Similar Artists' similar={similar} />

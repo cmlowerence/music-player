@@ -1,0 +1,174 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+.artist-left{
+  --padding: 1rem;
+  /* padding: var(--padding); */
+  --gap: 1rem;
+  width: 70%;
+  height: calc(100%-2*var(--gap));
+  margin: var(--gap);
+  justify-items: center;
+  display: grid;
+  grid-template-rows: 1fr 5fr 5fr;
+  gap: 1rem;
+  overflow-y: scroll;
+}
+
+.artist-left::-webkit-scrollbar{
+  display: none;
+}
+
+.artist-name{
+  width: calc(100% - 2*var(--padding));
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #c4d0e3;
+  align-items: center;
+}
+
+.artist-albums{
+  position: relative;
+  --album-padding: 1rem;
+  width: calc(100% - 2*(var(--padding) + var(--album-padding)));
+  background-color: rgba(165, 42, 42, 0.461);
+  padding: var(--album-padding);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  height: auto;
+}
+.album_see-more{
+  position: absolute;
+  top: -1rem;
+  right: 1rem;
+  color: #868686;
+  text-decoration: underline;
+  font-weight: 800;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+.album_see-more:hover{
+  color: #bec3bc;
+}
+
+.artist-tracks{
+  width: calc(100% - 2*var(--padding));
+  height: auto;
+  background-color: rgba(255, 235, 205, 0.582);
+}
+
+
+
+
+/* Right side div */
+.artist-right{
+  width: 30%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  /* row-gap: 1rem; */
+}
+
+.artist-image{
+  width: calc(100%);
+  aspect-ratio: 1;
+  border-top-right-radius: 30px;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  overflow: hidden;
+}
+
+.artist-image img.artist-image-base{
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+
+.artist-details{
+  background: linear-gradient(180deg,
+      rgba(54, 60, 98, 1) 10%,
+      rgba(54, 60, 98, .1) 100%);
+  transition: all.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-inline: 1rem;
+  padding-block-start: 1rem;
+  /* margin-top: 1rem; */
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+.artist-details>h1{
+  width: 100%;
+  color: #b8bfc1;
+  font-size: 2.5rem;
+  text-align: left;
+  margin-bottom: 1.4rem;
+}
+
+.artist-data{
+  --padding: .3rem;
+  width: calc(100% - 2*var(--padding));
+  color: #dfd5d5;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.artist-data>p{
+  font-size: 20px;
+  font-weight: 600;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  column-gap: .7rem;
+  align-items: flex-start;
+}
+.artist-data p b{
+  color:#91b9c4;
+}
+
+
+.artist-spotify-link{
+  display: flex;
+  width: auto;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 600;
+  align-items: center;
+  margin-block: .5rem;
+  gap: 1rem;
+  align-items: flex-end;
+  padding-block: .5rem;
+  align-self: center;
+  border-radius: 10px;
+  width: 80%;
+  border: none;
+  background: linear-gradient(45deg,
+  rgb(63, 183, 71) 10%,
+  rgba(49, 145, 62, 0.1) 100%);
+  transition: all .2s ease-in-out;
+}
+.artist-spotify-link:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg,
+      rgb(25, 144, 33) 10%,
+      rgba(20, 68, 26, 0.1) 100%);
+}
+
+.artist-spotify-link p{
+  display: flex;
+  align-items: flex-end;
+}

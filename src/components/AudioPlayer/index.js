@@ -3,15 +3,25 @@ import "./audioPlayer.css";
 import ProgressCircle from "./ProgressCircle";
 import Controls from "./Controls";
 import WaveAnimation from "./WaveAnimation";
+import { useLocation } from "react-router-dom";
 
 export default function AudioPlayer({
   currentTrack,
   currentIndex,
   setCurrentIndex,
   total,
+  trackOrigin,
+  coverImgs,
 }) {
+  const location = useLocation();
   const [isPlaying, setIsPlaying] = useState(false);
   const [trackProgress, setTrackProgress] = useState(0);
+  const [currentTrackDetails, setCurrentTrackDetails] = useState({
+    id: "",
+    name: "",
+    images: [],
+    artists: [],
+  });
 
   // Refs for audio and interval
   const audioRef = useRef(new Audio());
@@ -21,7 +31,7 @@ export default function AudioPlayer({
   // Function to handle next track
   const handleNext = useCallback(() => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % total.length);
-  }, [setCurrentIndex, total.length]);
+  }, [setCurrentIndex, total?.length]);
 
   // Function to handle previous track
   const handlePrev = () => {
@@ -42,15 +52,34 @@ export default function AudioPlayer({
       }
     }, 1000);
   }, [handleNext]);
-
-  // Effect to handle changes in currentIndex
   useEffect(() => {
     audioRef.current.pause();
     clearInterval(intervalRef.current);
     setIsPlaying(false);
+    if (trackOrigin === "playlist") {
+      setCurrentTrackDetails({
+        id: currentTrack?.id,
+        name: currentTrack?.name,
+        images: coverImgs,
+        artists: currentTrack?.album?.artists?.map((artist) => artist?.name),
+      });
+    } else if (trackOrigin === "album") {
+      setCurrentTrackDetails({
+        id: currentTrack?.id,
+        name: currentTrack?.name,
+        images: coverImgs,
+        artists: currentTrack?.artists?.map((artist) => artist?.name),
+      });
+    }
 
     // Set up audio for the new track
-    audioRef.current = new Audio(total[currentIndex]?.track.preview_url);
+    const trackUrl =
+      trackOrigin === "playlist"
+        ? total[currentIndex]?.track.preview_url
+        : trackOrigin === "album"
+        ? total[currentIndex]?.preview_url
+        : "";
+    audioRef.current = new Audio(trackUrl);
     audioRef.current.onloadedmetadata = () => {
       setTrackProgress(audioRef.current.currentTime);
       if (isReady.current) {
@@ -67,8 +96,7 @@ export default function AudioPlayer({
       audioRef.current.pause();
       clearInterval(intervalRef.current);
     };
-  }, [currentIndex, total, startTimer]);
-
+  }, [currentTrack, currentIndex, total, startTimer, trackOrigin, coverImgs]);
 
   // Function to toggle play/pause
   const togglePlay = () => {
@@ -87,10 +115,6 @@ export default function AudioPlayer({
   const duration = audioRef.current.duration || 0;
   const currentPercentage = duration ? (trackProgress / duration) * 100 : 0;
 
-  // Collect artist names
-  const artists =
-    currentTrack?.album?.artists.map((artist) => artist.name) || [];
-
   // Function to add leading zero to numbers less than 10
   const addZero = (n) => (n < 10 ? `0${n}` : n);
 
@@ -98,25 +122,31 @@ export default function AudioPlayer({
     <div className='player-body flex'>
       <div className='player-left-body'>
         <ProgressCircle
-          percentage={currentPercentage}
-          isPlaying={isPlaying}
-          image={currentTrack?.album?.images[0]?.url}
+          percentage={currentPercentage || 0}
+          isPlaying={isPlaying || false}
+          image={currentTrackDetails.images?.[1] || ""}
           size={300}
           color='#c96850'
         />
       </div>
       <div className='player-right-body flex'>
-        <p className='song-title'>{currentTrack?.name}</p>
-        <p className='song-artist'>{artists.join(" | ")}</p>
+        <p className='song-title'>
+          {currentTrackDetails?.name || "Unknown Song"}
+        </p>
+        <p className='song-artist'>
+          {currentTrackDetails?.artists?.join(" | ") || "Unknown artist"}
+        </p>
         <div className='player-right-bottom flex'>
           <div className='song-duration flex'>
-            <p className='duration'>00:{addZero(Math.round(trackProgress))}</p>
+            <p className='duration'>
+              00:{addZero(Math.round(trackProgress)) || 0}
+            </p>
             <WaveAnimation isPlaying={isPlaying} />
             <p className='duration'>00:30</p>
           </div>
         </div>
         <Controls
-          isPlaying={isPlaying}
+          isPlaying={isPlaying || false}
           togglePlay={togglePlay}
           handleNext={handleNext}
           handlePrev={handlePrev}

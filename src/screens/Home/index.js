@@ -9,13 +9,18 @@ import "./home.css";
 import Sidebar from "../../components/Sidebar";
 import Login from "../auth/Login";
 import { setClientToken } from "../../spotify";
+import Artists from "../Artists";
 
 export default function Home() {
   const [token, setToken] = useState("");
 
   useEffect(() => {
     const time = new Date();
-    const token = parseInt(window.localStorage.getItem('spotifyToken_expiry')) < time.getTime() ? '' : window.localStorage.getItem('spotifyToken_token')
+    const token =
+      parseInt(window.localStorage.getItem("spotifyToken_expiry")) <
+      time.getTime()
+        ? ""
+        : window.localStorage.getItem("spotifyToken_token");
     const hash = window.location.hash;
     window.location.hash = "";
 
@@ -43,6 +48,7 @@ export default function Home() {
           <Route path='/trending' element={<Trending />}></Route>
           <Route path='/player' element={<Player />}></Route>
           <Route path='/favorites' element={<Favorites />}></Route>
+          <Route path='/artist/:id' element={<Artists />} />
         </Routes>
       </div>
     </Router>
