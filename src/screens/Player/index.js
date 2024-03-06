@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import "./player.css";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -15,7 +15,19 @@ export default function Player() {
   const [currentTrack, setCurrentTrack] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
   const [coverImgs, setCoverImgs] = useState([]);
+  const [cachedObject, setCachedObject] = useState({});
 
+  useEffect(() => {
+    // Set the cached data if it doesn't exist
+    if (!window.localStorage.getItem("spotifyToken_cachedData")) {
+      const cacheData = {
+        id: "37i9dQZF1DX0ieekvzt1Ic",
+        type: "playlist",
+      };
+      const cacheDataStr = JSON.stringify(cacheData);
+      window.localStorage.setItem("spotifyToken_cachedData", cacheDataStr);
+    }
+  }, []);
   useEffect(() => {
     if (location.state) {
       if (location.state?.type === "playlist") {
@@ -24,10 +36,6 @@ export default function Player() {
           .then((response) => {
             setTracks(response.data.items);
             setCurrentTrack(response.data?.items[0]?.track);
-            window.localStorage.setItem(
-              "spotifyToken_playlist_id",
-              (location.state?.id).toString() || "1zbLfcXuRLe7wPA4nQLmQD"
-            );
           });
       } else if (location.state?.type === "album") {
         apiClient
@@ -41,35 +49,63 @@ export default function Player() {
       } else {
         throw new Error("No id type given");
       }
+      const _obj = {
+        id: location.state?.id,
+        type: location.state?.type,
+      };
+      setCachedObject(_obj);
+      const _objStr = JSON.stringify(_obj);
+      window.localStorage.setItem('spotifyToken_cachedData', _objStr);
     } else {
+      const cachedDataString = window.localStorage.getItem(
+        "spotifyToken_cachedData"
+      );
+      let cachedData;
+      cachedDataString
+        ? (cachedData = JSON.parse(cachedDataString))
+        : (cachedData = { id: "37i9dQZF1DX0ieekvzt1Ic", type: "playlist" });
+      console.log(cachedData);
+      setCachedObject(cachedData);
       apiClient
         .get(
-          `playlists/${
-            window.localStorage.getItem("spotifyToken_playlist_id") ||
-            "2Mj5Mpi1wwNXpjtTTFfNZz"
-          }/tracks`
+          `${
+            cachedData?.type === "playlist"
+              ? "playlists"
+              : cachedData?.type === "album"
+              ? "albums"
+              : "playlists"
+          }/${cachedData?.id}/tracks`
         )
         .then((response) => {
-          setTracks(response.data.items);
-          setCurrentTrack(response.data?.items[0]?.track);
+          console.log(response.data);
+          if (cachedData?.type === "playlist") {
+            setTracks(response.data.items);
+            setCurrentTrack(response.data?.items[0]?.track);
+          } else if (cachedData?.type === "album") {
+            setTracks(response.data.items);
+            setCurrentTrack(response.data?.items?.[0]);
+          }
         });
     }
   }, [location.state]);
-  useEffect(() => {
-    location.state?.type === "playlist"
-      ? setCurrentTrack(tracks[currentIndex]?.track)
-      : location.state?.type === "album"
-      ? setCurrentTrack(tracks[currentIndex])
-      : setCurrentTrack({})
-  }, [currentIndex, tracks, location,]);
 
-  useEffect(()=>{
+
+  
+  useEffect(() => {
+    location.state?.type === "playlist" || cachedObject?.type === "playlist"
+      ? setCurrentTrack(tracks[currentIndex]?.track)
+      : location.state?.type === "album" || cachedObject?.type === "album"
+      ? setCurrentTrack(tracks[currentIndex])
+      : setCurrentTrack({});
+  }, [currentIndex, tracks, location, cachedObject]);
+
+  useEffect(() => {
     setCoverImgs(
       location.state?.img_urls
         ? location.state?.img_urls.split(",")
         : currentTrack?.album?.images?.map((img) => img?.url)
     );
-  },[location, currentTrack?.album])
+  }, [location, currentTrack?.album]);
 
   return (
     <div className='screen-container flex'>
@@ -79,7 +115,7 @@ export default function Player() {
           total={tracks}
           currentIndex={currentIndex}
           setCurrentIndex={setCurrentIndex}
-          trackOrigin={location.state?.type}
+          trackOrigin={location.state?.type || cachedObject?.type}
           coverImgs={coverImgs}
         />
         <Widgets
@@ -93,7 +129,7 @@ export default function Player() {
         <SongCard
           currentTrack={currentTrack}
           coverImgs={coverImgs}
-          trackState={location.state}
+          trackState={location.state || cachedObject}
         />
         <Queue tracks={tracks} setCurrentIndex={setCurrentIndex} />
       </div>
