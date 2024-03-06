@@ -32,7 +32,6 @@
   position: relative;
   --album-padding: 1rem;
   width: calc(100% - 2*(var(--padding) + var(--album-padding)));
-  background-color: rgba(165, 42, 42, 0.461);
   padding: var(--album-padding);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
