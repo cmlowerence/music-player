@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+// import React, { useRef } from "react";
 import "./player.css";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -23,11 +23,12 @@ export default function Player() {
       const cacheData = {
         id: "37i9dQZF1DX0ieekvzt1Ic",
         type: "playlist",
+        coverImage: undefined,
       };
       const cacheDataStr = JSON.stringify(cacheData);
       window.localStorage.setItem("spotifyToken_cachedData", cacheDataStr);
     }
-  }, []);
+  }, [coverImgs]);
   useEffect(() => {
     if (location.state) {
       if (location.state?.type === "playlist") {
@@ -43,7 +44,8 @@ export default function Player() {
           .then((response) => {
             setTracks(response.data.items);
             setCurrentTrack(response.data?.items?.[0]);
-          });
+          })
+          .catch(err => {throw new Error(err.message)})
       } else if (location.state?.type === "track") {
         // do something
       } else {
@@ -52,10 +54,11 @@ export default function Player() {
       const _obj = {
         id: location.state?.id,
         type: location.state?.type,
+        coverImage: location.state?.img_urls,
       };
       setCachedObject(_obj);
       const _objStr = JSON.stringify(_obj);
-      window.localStorage.setItem('spotifyToken_cachedData', _objStr);
+      window.localStorage.setItem("spotifyToken_cachedData", _objStr);
     } else {
       const cachedDataString = window.localStorage.getItem(
         "spotifyToken_cachedData"
@@ -63,8 +66,7 @@ export default function Player() {
       let cachedData;
       cachedDataString
         ? (cachedData = JSON.parse(cachedDataString))
-        : (cachedData = { id: "37i9dQZF1DX0ieekvzt1Ic", type: "playlist" });
-      console.log(cachedData);
+        : (cachedData = { id: "37i9dQZF1DX0ieekvzt1Ic", type: "playlist"});
       setCachedObject(cachedData);
       apiClient
         .get(
@@ -77,7 +79,6 @@ export default function Player() {
           }/${cachedData?.id}/tracks`
         )
         .then((response) => {
-          console.log(response.data);
           if (cachedData?.type === "playlist") {
             setTracks(response.data.items);
             setCurrentTrack(response.data?.items[0]?.track);
@@ -85,12 +86,15 @@ export default function Player() {
             setTracks(response.data.items);
             setCurrentTrack(response.data?.items?.[0]);
           }
+          let _data = JSON.parse(window.localStorage.getItem('spotifyToken_cachedData'))
+          if (_data?.coverImage){
+            setCoverImgs(_data?.coverImage.split(','))
+          }
+
         });
     }
   }, [location.state]);
 
-
-  
   useEffect(() => {
     location.state?.type === "playlist" || cachedObject?.type === "playlist"
       ? setCurrentTrack(tracks[currentIndex]?.track)

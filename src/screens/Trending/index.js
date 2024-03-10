@@ -114,7 +114,7 @@ export default function Trending(props) {
     };
 
     fetchTopArtists();
-  }, []);
+  }, [topArtists]);
 
   const playPlaylist = (playlist_id) => {
     navigate("/player", { state: { id: playlist_id, type:'playlist' } });

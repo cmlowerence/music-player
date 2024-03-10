@@ -3,7 +3,7 @@ import "./audioPlayer.css";
 import ProgressCircle from "./ProgressCircle";
 import Controls from "./Controls";
 import WaveAnimation from "./WaveAnimation";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 
 export default function AudioPlayer({
   currentTrack,
@@ -13,7 +13,7 @@ export default function AudioPlayer({
   trackOrigin,
   coverImgs,
 }) {
-  const location = useLocation();
+  // const location = useLocation();
   const [isPlaying, setIsPlaying] = useState(false);
   const [trackProgress, setTrackProgress] = useState(0);
   const [currentTrackDetails, setCurrentTrackDetails] = useState({
