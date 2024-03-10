@@ -28,8 +28,11 @@ export default function ProgressCircle({
   size,
   color,
 }) {
+  const clipCircleRadius = size / 2 - 30;
+  const clipInnerCircleRadius = size / 2 -(size === 300 || size === 290 ? 100 : size === 250 || size === 260 ? 90 : size < 250 && size > 200 ? 80 : 50);
+
   return (
-    <div className='progress-circle flex'>
+    <div className={`progress-circle flex ${isPlaying ? "active" : ""}`}>
       <svg width={size} height={size}>
         <g>
           <Circle strokeWidth={".4rem"} color={"#3b4f73"} size={size} />
@@ -42,40 +45,30 @@ export default function ProgressCircle({
         </g>
         <defs>
           <clipPath id='myCircle'>
-            <circle
-              cx='50%'
-              cy='50%'
-              r={size / 2 - 30}
-              fill={"#ffffff"}
-            ></circle>
+            <circle cx='50%' cy='50%' r={clipCircleRadius} fill={"#ffffff"} />
           </clipPath>
           <clipPath id='myInnerCircle'>
-            <circle
-              cx='50%'
-              cy='50%'
-              r={size / 2 - 100}
-              fill={"#ffffff"}
-            ></circle>
+            <circle cx='50%' cy='50%' r={clipInnerCircleRadius} fill={"#ffffff"} />
           </clipPath>
         </defs>
         <image
-          className={isPlaying ? "active" : ""}
-          x={30}
-          y={30}
-          width={2 * (size / 2 - 30)}
-          height={2 * (size / 2 - 30)}
+          className="circle-image"
+          x={size / 2 - clipCircleRadius}
+          y={size / 2 - clipCircleRadius}
+          width={2 * clipCircleRadius}
+          height={2 * clipCircleRadius}
           href='https://pngimg.com/uploads/vinyl/vinyl_PNG46.png'
-          clipPath="url(#myCircle)"
-          />
+          clipPath='url(#myCircle)'
+        />
 
         <image
-          className={isPlaying ? "active" : ""}
-          x={100}
-          y={100}
-          width={2 * (size / 2 - 100)}
-          height={2 * (size / 2 - 100)}
+          className="inner-circle-image"
+          x={size / 2 - clipInnerCircleRadius}
+          y={size / 2 - clipInnerCircleRadius}
+          width={2 * clipInnerCircleRadius}
+          height={2 * clipInnerCircleRadius}
           href={image}
-          clipPath="url(#myInnerCircle)"
+          clipPath='url(#myInnerCircle)'
         />
       </svg>
     </div>

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
+import "./audioPlayer-media.css";
 import "./audioPlayer.css";
 import ProgressCircle from "./ProgressCircle";
 import Controls from "./Controls";
@@ -97,7 +98,31 @@ export default function AudioPlayer({
       clearInterval(intervalRef.current);
     };
   }, [currentTrack, currentIndex, total, startTimer, trackOrigin, coverImgs]);
+  const [size, setSize] = useState(300); // Initial size
 
+  useEffect(() => {
+    const handleResize = () => {
+      const screenWidth = window.innerWidth;
+      if (screenWidth >= 1240) {
+        setSize(300);
+      } else if (screenWidth >= 950) {
+        setSize(250);
+      } else if (screenWidth >= 500) {
+        setSize(290);
+      } else if (screenWidth < 500 && screenWidth > 340) {
+        setSize(230);
+      } else {
+        setSize(190);
+      }
+    };
+    handleResize();
+
+    // Event listener for window resize
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   // Function to toggle play/pause
   const togglePlay = () => {
     if (isPlaying) {
@@ -125,7 +150,7 @@ export default function AudioPlayer({
           percentage={currentPercentage || 0}
           isPlaying={isPlaying || false}
           image={currentTrackDetails.images?.[1] || ""}
-          size={300}
+          size={size}
           color='#c96850'
         />
       </div>

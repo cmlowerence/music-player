@@ -1,0 +1,37 @@
+@media screen and (max-width: 600px){
+  .sidebar-container{
+    width: 80px;
+  }
+
+  .btn-body{
+    width: 65px !important;
+    height: 65px !important;
+    border-radius: 15px !important;
+  }
+
+  .btn-body.active{
+    transform: scale(1.02);
+  }
+}
+
+@media screen and (max-width: 480px){
+  .sidebar-container{
+    width: 65px;
+  }
+
+  .btn-body{
+    width: 55px !important;
+    height: 55px !important;
+    border-radius: 10px !important;
+  }
+
+  .btn-title{
+    font-size: 10px !important;
+  }
+
+  .profile-image{
+    width: 35px;
+    height: 35px;
+    border-radius: 15px;
+  }
+}

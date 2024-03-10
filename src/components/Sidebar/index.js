@@ -1,9 +1,8 @@
 import React, { useState,useEffect } from "react";
 import "./sidebar.css";
-import { MdFavorite, MdSpaceDashboard } from 'react-icons/md'
+import "./sidebar-media.css";
 import { FaGripfire, FaPlay, FaSignOutAlt } from 'react-icons/fa'
 import { IoLibrary } from 'react-icons/io5'
-
 import SidebarButton from "./SidebarButton";
 import apiClient from "../../spotify";
 
@@ -23,13 +22,11 @@ export default function Sidebar() {
         alt='Profile'
       />
       <div>
-        <SidebarButton title='Feed' to='/feed' icon={<MdSpaceDashboard />}/>
         <SidebarButton title='Trending' to='/trending' icon={<FaGripfire />}/>
         <SidebarButton title='Player' to='/player' icon={<FaPlay />}/>
-        <SidebarButton title='Favorites' to='/favorites' icon={<MdFavorite />}/>
         <SidebarButton title='Library' to='/' icon={<IoLibrary />}/>
       </div>
-        <SidebarButton title='Sign Out' to='/' icon={<FaSignOutAlt/>}/>
+        <SidebarButton title='Sign Out' to='/_' icon={<FaSignOutAlt/>}/>
     </div>
   );
 }

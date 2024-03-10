@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const authEndpoint = 'https://accounts.spotify.com/authorize?';
 const clientID = 'fe08124ff3484aaba7eadce27b5b9613';
-// const redirectUri = 'http://localhost:3000';
-const redirectUri = 'https://musicbyspotify.netlify.app';
+const redirectUri = 'http://localhost:3000';
+// const redirectUri = 'https://musicbyspotify.netlify.app';
 const scope = ['user-library-read', 'playlist-read-private'];
 
 export const loginEndpoint = `${authEndpoint}client_id=${clientID}&redirect_uri=${redirectUri}&scopes=${scope.join("%20")}&response_type=token&show_dialog=true`;

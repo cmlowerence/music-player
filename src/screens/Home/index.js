@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Library from "../Library";
-import Feed from "../Feed";
 import Trending from "../Trending";
 import Player from "../Player";
-import Favorites from "../Favorites";
 import "./home.css";
 import Sidebar from "../../components/Sidebar";
 import Login from "../auth/Login";
@@ -44,10 +42,8 @@ export default function Home() {
         <Sidebar />
         <Routes>
           <Route path='/' element={<Library />}></Route>
-          <Route path='/feed' element={<Feed />}></Route>
           <Route path='/trending' element={<Trending />}></Route>
           <Route path='/player' element={<Player />}></Route>
-          <Route path='/favorites' element={<Favorites />}></Route>
           <Route path='/artist/:id' element={<Artists />} />
         </Routes>
       </div>

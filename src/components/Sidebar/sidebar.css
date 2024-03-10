@@ -1,6 +1,7 @@
 .sidebar-container{
+  --padding-block-end: 1rem;
   width: 100px;
-  height: 100%;
+  height: calc(100% - var(--padding-block-end));
   display: flex;
   flex-direction: column;
   align-items: center;

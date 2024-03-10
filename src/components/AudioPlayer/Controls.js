@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import "./controls.css";
 import { IconContext } from "react-icons";
 import {
@@ -15,6 +15,28 @@ export default function Controls({
   handlePrev,
   total,
 }) {
+  const [iconSize, setIconSize] = useState(24);
+
+  useEffect(() => {
+    const handleIconSize = () => {
+      const screenWidth = window.innerWidth;
+      if (screenWidth >= 1240) {
+        setIconSize(24);
+      } else if (screenWidth >= 700) {
+        setIconSize(20);
+      } else {
+        setIconSize(17);
+      }
+    };
+    handleIconSize();
+
+    window.addEventListener("resize", handleIconSize);
+
+    return () => {
+      window.removeEventListener("resize", handleIconSize);
+    };
+  });
+
   const togglePlayPause = useCallback(() => {
     togglePlay();
   }, [togglePlay]);

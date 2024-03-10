@@ -1,4 +1,5 @@
 // import React, { useRef } from "react";
+import "./player-media.css";
 import "./player.css";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -45,7 +46,9 @@ export default function Player() {
             setTracks(response.data.items);
             setCurrentTrack(response.data?.items?.[0]);
           })
-          .catch(err => {throw new Error(err.message)})
+          .catch((err) => {
+            throw new Error(err.message);
+          });
       } else if (location.state?.type === "track") {
         // do something
       } else {
@@ -66,7 +69,7 @@ export default function Player() {
       let cachedData;
       cachedDataString
         ? (cachedData = JSON.parse(cachedDataString))
-        : (cachedData = { id: "37i9dQZF1DX0ieekvzt1Ic", type: "playlist"});
+        : (cachedData = { id: "37i9dQZF1DX0ieekvzt1Ic", type: "playlist" });
       setCachedObject(cachedData);
       apiClient
         .get(
@@ -86,11 +89,12 @@ export default function Player() {
             setTracks(response.data.items);
             setCurrentTrack(response.data?.items?.[0]);
           }
-          let _data = JSON.parse(window.localStorage.getItem('spotifyToken_cachedData'))
-          if (_data?.coverImage){
-            setCoverImgs(_data?.coverImage.split(','))
+          let _data = JSON.parse(
+            window.localStorage.getItem("spotifyToken_cachedData")
+          );
+          if (_data?.coverImage) {
+            setCoverImgs(_data?.coverImage.split(","));
           }
-
         });
     }
   }, [location.state]);
@@ -112,7 +116,7 @@ export default function Player() {
   }, [location, currentTrack?.album]);
 
   return (
-    <div className='screen-container flex'>
+    <div className='screen-container playerComponent-body flex'>
       <div className='left-player-body'>
         <AudioPlayer
           currentTrack={currentTrack}

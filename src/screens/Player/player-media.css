@@ -1,0 +1,87 @@
+@media screen and (max-width: 920px) {
+  .widget-body {
+    display: none;
+  }
+
+  .left-player-body {
+    grid-template-rows: 1fr;
+  }
+  
+  .right-player-body{
+    width: 40%;
+  }
+
+  .player-right-body {
+    gap: .5rem;
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 650px){
+  .right-player-body{
+    display: none;
+    width: 0%;
+  }
+
+  .left-player-body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    place-self: center;
+    /* margin: auto; */
+  }
+
+  .song-title{
+    font-size: 30px;
+  }
+}
+
+@media screen and (max-width:340px) {
+  .left-player-body {
+    /* grid-template-rows: 2fr 3fr; */
+    align-content: center;
+
+  }
+
+  .song-title{
+    font-size: 20px;
+  }
+
+  .player-right-bottom{
+    margin-bottom: 1rem;
+  }
+  .song-duration{
+    align-items: center;
+    margin: auto;
+    gap: .5rem;
+  }
+
+  .duration{
+    font-size: 12px;
+  }
+
+  .box-container .box7, .box-container .box4{
+    display: none;
+  }
+
+  .box-container{
+    --boxSize: 3px;
+    --gutter: 6px;
+  }
+
+  .controls-wrapper{
+    gap: .9rem;
+  }
+}
+
+@media screen and (max-width: 280px){
+  .box-container{
+    --gutter: 4px;
+  }
+
+  .box-container .box3, .box-container .box1{
+    display: none;
+  }
+
+}

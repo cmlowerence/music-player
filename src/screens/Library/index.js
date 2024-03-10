@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import apiClient from "../../spotify";
 import "./library.css";
+import "./library-media.css";
 import { IconContext } from "react-icons";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";

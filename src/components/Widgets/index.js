@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./widgets.css";
+import "./widgetCard-media.css"
 import apiClient from "../../spotify";
 import WidgetCard from "./WidgetCard";
 

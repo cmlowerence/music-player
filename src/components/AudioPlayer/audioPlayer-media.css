@@ -1,0 +1,36 @@
+@media screen and (max-width : 1050px){
+  /* local class */
+  .song-title{
+    font-size: 35px;
+  }
+
+  .song-artist{
+    font-size: 13px;
+  }
+
+  .duration{
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  /* Controls */
+  .action-btn{
+    width: 40px;
+    height: 40px;
+    border-radius: 15px;
+  }
+
+  .play-pause-btn{
+    width: 50px;
+    height: 50px;
+    border-radius: 20px;
+  }
+}
+
+@media screen and (max-width: 920px){
+  .player-body{
+    grid-template-columns: none;
+    grid-template-rows: 1fr 1fr ;
+
+  }
+}

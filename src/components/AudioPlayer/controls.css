@@ -1,8 +1,9 @@
 .controls-wrapper{
-	width: 50%;
   margin: 0px;
   align-items: center;
-  justify-content: space-between;
+  place-self: center;
+  gap: 2rem;
+  justify-content: center;
 }
 
 .action-btn{
