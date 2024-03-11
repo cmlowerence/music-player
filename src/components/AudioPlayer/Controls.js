@@ -56,7 +56,7 @@ export default function Controls({
   }, [togglePlayPause]);
 
   return (
-    <IconContext.Provider value={{ size: "35px", color: "#c4d0e3" }}>
+    <IconContext.Provider value={{ size: iconSize+'px', color: "#c4d0e3" }}>
       <div className='controls-wrapper flex'>
         <div className='action-btn flex' onClick={handlePrev}>
           <IoPlaySkipBack />
