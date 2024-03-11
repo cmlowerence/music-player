@@ -1,36 +1,36 @@
 @media screen and (max-width : 1050px){
   /* local class */
   .song-title{
-    font-size: 35px;
+    font-size: 35px !important;
   }
 
   .song-artist{
-    font-size: 13px;
+    font-size: 13px !important;
   }
 
   .duration{
-    font-size: 14px;
+    font-size: 14px !important;
     font-weight: 600;
   }
 
   /* Controls */
   .action-btn{
-    width: 40px;
-    height: 40px;
-    border-radius: 15px;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 15px !important;
   }
 
   .play-pause-btn{
-    width: 50px;
-    height: 50px;
-    border-radius: 20px;
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 20px !important;
   }
 }
 
 @media screen and (max-width: 920px){
   .player-body{
-    grid-template-columns: none;
-    grid-template-rows: 1fr 1fr ;
+    grid-template-columns: none !important;
+    grid-template-rows: 1fr 1fr !important;
 
   }
 }

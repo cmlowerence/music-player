@@ -1,8 +1,22 @@
+.trending-component{
+	width: 100%;
+	--margin: .5rem;
+	height: calc(100% - 2*var(--margin));
+	margin-block: auto;
+	overflow-y: scroll;
+	border-radius: 30px;
+}
+.trending-component:-webkit-scrollbar{
+	display: none;
+	width: 0;
+}
+
 .trending-playlist-container{
 	flex-direction: column;
-	padding: 1rem;
+	--padding: 1rem;
 	flex-wrap: wrap;
-	max-width: 100%;
+	width: calc(100% - 2*var(--padding));
+	margin: auto;
 }
 
 .trending-playlist-heading{
@@ -16,10 +30,14 @@
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	place-items: center;
-	row-gap: 1rem;
+	gap: 1rem;
 	margin-bottom: 1rem;
 }
 
+.trending-playlist{
+	justify-content: center;
+	width: 100%;
+}
 
 /* Top artist card */
 .top-artists-container{
@@ -35,20 +53,13 @@
 }
 
 .top-artists-wrapper{
-	max-height: 330px;
 	padding: 5px;
-	width: 80%;
 	place-self: center;
 	display: grid;
   grid-template-columns: repeat(4, 1fr);
   place-items: center;
 	justify-content: center;
-	row-gap: 1.5rem;
-	overflow-y: scroll;
-	-ms-overflow-style: none;  /* Internet Explorer 10+ */
-	scrollbar-width: none;  /* Firefox */
-	-webkit-overflow-scrolling: touch;  /* Safari and Chrome */
-	overflow: -moz-scrollbars-none;  /* Firefox */
+	gap: 1.5rem;
 }
 .top-artists-wrapper::-webkit-scrollbar{
 	display: none;
@@ -59,15 +70,13 @@
 	width: 200px;
 	height: 300px;
 	position: relative;
-	border-radius: 30px;
+	border-radius: 20px;
 	background: rgb(30, 42, 62);
   background: linear-gradient(
     75%,
     rgba(40, 58, 88) 0%,
     rgba(73, 88, 119, 0) 100%
   );
-	/* -webkit-backdrop-filter: blur(12.5px);
-  backdrop-filter: blur(12.5px); */
 	cursor: pointer;
 	transition: .2s all ease-in-out;
 	z-index: 1;

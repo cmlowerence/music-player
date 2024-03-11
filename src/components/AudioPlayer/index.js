@@ -105,7 +105,7 @@ export default function AudioPlayer({
       const screenWidth = window.innerWidth;
       if (screenWidth >= 1240) {
         setSize(300);
-      } else if (screenWidth >= 950) {
+      } else if (screenWidth >= 920) {
         setSize(250);
       } else if (screenWidth >= 500) {
         setSize(290);
